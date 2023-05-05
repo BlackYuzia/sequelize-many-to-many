@@ -44,8 +44,14 @@ async function bootstrap() {
     })
 
     // Assign arguments to commands
-    await unique.$add("argument", [arg1, arg2, arg3]); // should have 3 arguments
-    await duplicates.$add("argument", [arg1, arg1, arg2, arg2]); // should have 4 arguments
+    await unique.$add("argument", arg1, { through: { order: 1 } }); // should have 3 arguments
+    await unique.$add("argument", arg2, { through: { order: 2 } }); // should have 3 arguments
+    await unique.$add("argument", arg3, { through: { order: 3 } }); // should have 3 arguments
+
+    await duplicates.$add("argument", arg1, { through: { order: 1 } }); // should have 4 arguments
+    await duplicates.$add("argument", arg2, { through: { order: 2 } }); // should have 4 arguments
+    await duplicates.$add("argument", arg2, { through: { order: 3 } }); // should have 4 arguments
+    await duplicates.$add("argument", arg1, { through: { order: 4 } }); // should have 4 arguments
 
 
     // Reload to parse arguments from database
